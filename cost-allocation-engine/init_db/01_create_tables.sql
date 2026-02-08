@@ -14,6 +14,6 @@ create table cost_center_allocated(
 	month date not null,
 	cost_center varchar(100) not null,
 	total_cost numeric(14,2) not null,
-	updated_at timestamp not null default now()
+	updated_at timestamp not null default now(),
 	primary key(month, cost_center)
 );
