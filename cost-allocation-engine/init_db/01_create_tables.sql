@@ -8,4 +8,12 @@ create table public.cost_transactions (
 	amount numeric(14, 2) not null check (amount >= 0),
 	allocation_basis varchar(50),
 	created_at timestamp not null default now()
-)
+);
+
+create table cost_center_allocated(
+	month date not null,
+	cost_center varchar(100) not null,
+	total_cost numeric(14,2) not null,
+	updated_at timestamp not null default now()
+	primary key(month, cost_center)
+);
