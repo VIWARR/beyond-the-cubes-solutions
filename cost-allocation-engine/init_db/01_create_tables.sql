@@ -1,3 +1,4 @@
+-- Плоская таблица факта
 create table public.cost_transactions (
 	transaction_id bigserial primary key,
 	transaction_date date not null,
@@ -10,6 +11,19 @@ create table public.cost_transactions (
 	created_at timestamp not null default now()
 );
 
+-- Индекс для cost_transactions
+create index idx_transactions_date on cost_transactions(transaction_date);
+
+-- Служебная таблица
+create table calculations_tasks (
+	id serial primary key,
+	target_month date not null unique,
+	status varchar(20) not null default 'pending',
+	error_message text,
+	updated_at timestamp default now()
+);
+
+-- Таблица с управленческой себестоимостью
 create table cost_center_allocated(
 	month date not null,
 	cost_center varchar(100) not null,
