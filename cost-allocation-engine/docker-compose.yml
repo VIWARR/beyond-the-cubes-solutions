@@ -8,22 +8,26 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     ports:
       - "5432:5432"
     volumes:
       - ./init_db:/docker-entrypoint-initdb.d
 
   solver:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: cost_model_python
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    command: ["python", "-u", "app/test_connection.py"]
+    command: ["python", "-u", "app/main.py"]
