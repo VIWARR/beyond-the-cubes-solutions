@@ -30,4 +30,4 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    command: ["python", "-u", "app/main.py"]
+    command: ["python", "-u", "-m", "app.main"]
