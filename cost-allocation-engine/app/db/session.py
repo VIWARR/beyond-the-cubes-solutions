@@ -2,7 +2,7 @@ import logging
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from tenacity import retry, stop_after_attempt, wait_fixed, before_sleep_log
-from config import settings
+from app.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -15,5 +15,4 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     before_sleep=before_sleep_log(logger, logging.WARNING)
 )
 def get_db_session():
-    with engine.connect() as conn:
-        return SessionLocal()
+    return SessionLocal()
