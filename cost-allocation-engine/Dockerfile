@@ -5,6 +5,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app ./app
+COPY . .
 
-CMD ["python", "-u", "app/main.py"]
+ENV PYTHONPATH=/app
+
+CMD ["python", "-u", "-m", "app.main"]
